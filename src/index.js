@@ -28,34 +28,35 @@ export default {
     }
   },
 
-  render () {
-    let children = this.$slots.default
+  render: function () {
+    var children = this.$slots.default
     if (!children) {
       return
     }
 
     // filter out text nodes (possible whitespaces)
-    children = children.filter(c => c.tag)
+    children = children.filter(function (c) {return c.tag})
     /* istanbul ignore if */
     if (!children.length) {
       return
     }
 
-    const rawChild = children[0]
-
+    var rawChild = children[0]
 
     rawChild.data.attrs = rawChild.data.attrs || {}
     Object.assign(rawChild.data.attrs, {
       'aria-label': this.label
     })
 
+    var typeKey = 'tooltip--' + this.type
+    var sizeKey = 'tooltip--' + this.size
     rawChild.data.class = Array.isArray(rawChild.data.class) ? rawChild.data.class : [rawChild.data.class]
     rawChild.data.class.push(classNames(
       'tooltip',
-      `tooltip--${this.placement}`,
+      'tooltip--' + this.placement,
       {
-        [`tooltip--${this.type}`]: this.type,
-        [`tooltip--${this.size}`]: this.size,
+        typeKey: this.type,
+        sizeKey: this.size,
         'tooltip--rounded': this.rounded,
         'tooltip--always': this.always,
         'tooltip--no-animate': this.noAnimate
@@ -66,9 +67,8 @@ export default {
   },
 
   watch: {
-    label (val) {
+    label: function (val) {
       this.$el.setAttribute('aria-label', val)
     }
   }
-
 }
