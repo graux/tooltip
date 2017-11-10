@@ -11,7 +11,9 @@ export default {
     size: {
       type: String,
       default: 'medium',
-      validator: value => ['small', 'medium', 'large'].includes(value)
+      validator: function (value) {
+        return ['small', 'medium', 'large'].includes(value)
+      }
     },
     always: Boolean,
     noAnimate: Boolean,
